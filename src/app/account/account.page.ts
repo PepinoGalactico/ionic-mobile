@@ -34,6 +34,7 @@ export class AccountPage implements OnInit {
   email = ''
   fullname = ''
   fulladdress = ''
+  loading = false;
 
   regions: { region: string; comunas: string[] }[] = [];
   comunas: string[] = [];
@@ -58,6 +59,7 @@ export class AccountPage implements OnInit {
 
   async getProfile() {
     try {
+      this.loading = true;
       const { data: profile, error, status } = await this.supabase.profile
       if (error && status !== 406) {
         throw error
@@ -65,9 +67,11 @@ export class AccountPage implements OnInit {
       if (profile) {
         this.profile = profile
         this.initializeComunas();
+        this.loading = false;
       }
     } catch (error: any) {
       alert(error.message)
+      this.loading = false;
     }
     if (this.profile.names && this.profile.last_name && this.profile.second_last_name) {
       this.fullname = this.profile.names + ' ' + this.profile.last_name + ' ' + this.profile.second_last_name
