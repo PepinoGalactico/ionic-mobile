@@ -1,0 +1,133 @@
+<ion-content>
+  <div class="flex flex-col justify-between items-center h-full px-4 bg-black min-h-full space-y-6 pt-8">
+    <div class="flex flex-col justify-center items-center pb-8 space-y-8">
+      <h1 class="text-4xl font-body">
+        Perfil
+      </h1>
+      <app-avatar
+        [avatarUrl]="this.profile.avatar_url"
+        (upload)="handleUpload($event)"
+      ></app-avatar>
+      <form class="flex flex-col justify-center items-center space-y-6">
+
+        <div class="flex flex-col w-full">
+          <label for="address" class="mb-2 text-sm font-body text-white font-bold">Nombre</label>
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none w-full">
+              <svg class="w-6 h-6 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M4 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4Zm10 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm0 3a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-8-5a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm1.942 4a3 3 0 0 0-2.847 2.051l-.044.133-.004.012c-.042.126-.055.167-.042.195.006.013.02.023.038.039.032.025.08.064.146.155A1 1 0 0 0 6 17h6a1 1 0 0 0 .811-.415.713.713 0 0 1 .146-.155c.019-.016.031-.026.038-.04.014-.027 0-.068-.042-.194l-.004-.012-.044-.133A3 3 0 0 0 10.059 14H7.942Z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <input readonly [(ngModel)]="fullname" type="text" name="profile" id="profile" class="truncate block shadow-lg border-0 p-3 ps-10 pe-12 w-full z-20 text-md bg-gray-50 font-body text-black rounded-lg" placeholder="Juan Silva Hernández" />
+            <button id="modal-name" class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-mainyellow rounded-e-lg border hover:scale-105 active:scale-95"><svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+            </svg>
+            </button>
+          </div>
+        </div>
+
+        <ion-modal #modal1 trigger="modal-name">
+          <ng-template>
+            <ion-header>
+              <div class="flex flex-row bg-mainblack justify-between py-2 items-center">
+                <h4 class="pl-4 text-white my-auto">Editar perfil</h4>
+                <button class="p-2 mr-2 rounded-lg bg-mainyellow hover:scale-105 active:scale-95" (click)="modal1.dismiss()">
+                  <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                  </svg>
+                </button>
+              </div>
+            </ion-header>
+            <ion-content>
+              <form class="flex flex-col bg-black w-full h-full px-8 pt-8 justify-between">
+                <div class="flex flex-col space-y-6">
+                  <div class="flex flex-col">
+                    <label for="names" class="mb-2 text-sm font-body text-white font-bold">Nombres</label>
+                    <input id="names" type="text" name="names" [(ngModel)]="profile.names" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="last_name" class="mb-2 text-sm font-body text-white font-bold">Apellido Paterno</label>
+                    <input id="last_name" type="text" name="last_name" [(ngModel)]="profile.last_name" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="second_last_name" class="mb-2 text-sm font-body text-white font-bold">Apellido Materno</label>
+                    <input id="second_last_name" type="text" name="second_last_name" [(ngModel)]="profile.second_last_name" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                  </div>
+                </div>
+                <div class="flex pb-8">
+                  <button (click)="updateProfile()" class="mx-auto px-4 py-4 rounded-lg w-full text-center">Actualizar</button>
+                </div>
+              </form>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+        <div class="flex flex-col">
+          <label for="address" class="mb-2 text-sm font-body text-white font-bold">Dirección</label>
+          <div class="relative w-full">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-6 h-6 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M11.906 1.994a8.002 8.002 0 0 1 8.09 8.421 7.996 7.996 0 0 1-1.297 3.957.996.996 0 0 1-.133.204l-.108.129c-.178.243-.37.477-.573.699l-5.112 6.224a1 1 0 0 1-1.545 0L5.982 15.26l-.002-.002a18.146 18.146 0 0 1-.309-.38l-.133-.163a.999.999 0 0 1-.13-.202 7.995 7.995 0 0 1 6.498-12.518ZM15 9.997a3 3 0 1 1-5.999 0 3 3 0 0 1 5.999 0Z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <input readonly [(ngModel)]="fulladdress" type="text" name="address" id="address" class="truncate block shadow-lg border-0 p-3 ps-10 pe-12 min-w-72 z-20 text-md bg-gray-50 font-body text-black rounded-lg" placeholder="Antonio Varas 666, Providencia" />
+            <button id="modal-address" class="absolute top-0 end-0 p-2.5 h-full text-sm font-medium text-white bg-mainyellow rounded-e-lg border hover:scale-105 active:scale-95"><svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+            </svg>
+            </button>
+          </div>
+        </div>
+
+        <ion-modal #modal2 trigger="modal-address">
+          <ng-template>
+            <ion-header>
+              <div class="flex flex-row bg-mainblack justify-between py-2 items-center">
+                <h4 class="pl-4 text-white my-auto">Editar dirección</h4>
+                <button class="p-2 mr-2 rounded-lg bg-mainyellow hover:scale-105 active:scale-95" (click)="modal2.dismiss()">
+                  <svg class="w-6 h-6 text-black" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                  </svg>
+                </button>
+              </div>
+            </ion-header>
+            <ion-content>
+              <form class="flex flex-col bg-black w-full h-full px-8 pt-8 justify-between">
+                <div class="flex flex-col space-y-6">
+                  <div class="flex flex-col">
+                    <label for="region" class="mb-2 text-sm font-body text-white font-bold">Región</label>
+                    <select id="region" type="text" name="region" [(ngModel)]="profile.region" (change)="onRegionChange($event)" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                      <option value="" disabled>Selecciona una región</option>
+                      <option *ngFor="let region of regions" [value]="region.region">{{ region.region }}</option>
+                    </select>
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="comuna" class="mb-2 text-sm font-body text-white font-bold">Comuna</label>
+                    <select id="comuna" type="text" name="comuna" [(ngModel)]="profile.comuna" [disabled]="!profile.region" (change)="onComunaChange($event)" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                      <option value="" disabled>Selecciona una comuna</option>
+                      <option *ngFor="let comuna of comunas" [value]="comuna">{{ comuna }}</option>
+                    </select>
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="address_line" class="mb-2 text-sm font-body text-white font-bold">Calle</label>
+                    <input id="address_line" type="text" name="address_line" [(ngModel)]="profile.address" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="address_number" class="mb-2 text-sm font-body text-white font-bold">Número</label>
+                    <input id="address_number" type="number" name="address_number" [(ngModel)]="profile.address_number" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                  </div>
+                  <div class="flex flex-col">
+                    <label for="apartment" class="mb-2 text-sm font-body text-white font-bold">Departamento / Casa</label>
+                    <input id="apartment" type="text" name="apartment" [(ngModel)]="profile.apartment" class="text-black text-md font-body rounded-lg bg-gray-50 p-3">
+                  </div>
+                </div>
+                <div class="flex pb-8">
+                  <button (click)="updateAddress()" class="mx-auto px-4 py-4 rounded-lg w-full text-center">Actualizar</button>
+                </div>
+              </form>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </form>
+    </div>
+  </div>
+</ion-content>

@@ -3,26 +3,25 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-
+import { FooterComponent } from '../footer/footer.component';
 import { HomePageRoutingModule } from './home-routing.module';
-
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
+import {MapCommonComponent} from "../map-common/map-common.component";
 
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    HomePageRoutingModule,
-    InputTextModule,
-    ButtonModule,
-    CalendarModule
-  ],
-  declarations: [
-    HomePage
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        HomePageRoutingModule,
+        FooterComponent,
+        MapCommonComponent,
+    ],
+    exports: [
+        HomePage
+    ],
+    declarations: [
+        HomePage
+    ]
 })
 export class HomePageModule {}

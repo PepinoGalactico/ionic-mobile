@@ -1,0 +1,26 @@
+:host {
+  display: block;
+  margin: auto;
+  min-height: 120px;
+}
+:host .avatar_wrapper {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 120px;
+  aspect-ratio: 1;
+  background: var(--ion-color-step-50);
+  border: thick solid var(--ion-color-step-200);
+}
+:host .avatar_wrapper:hover {
+  cursor: pointer;
+}
+:host .avatar_wrapper ion-icon.no-avatar {
+  width: 100%;
+  height: 115%;
+}
+:host img {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}

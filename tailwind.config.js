@@ -8,7 +8,9 @@ module.exports = {
   ],
   theme: {
     colors: {
-      'mainblue': '#3139FB',
+      'mainblack': '#1A1A1A',
+      'mainyellow': '#FFB800',
+      'maingray': '#666666',
       transparent: 'transparent',
       current: 'currentColor',
       black: colors.black,
@@ -35,8 +37,7 @@ module.exports = {
       white: colors.white,
     },
     fontFamily: {
-      'display': ['Vanilla'],
-      'body': ['Inter'],
+      'body': ['Lato'],
     },
   },
   corePlugins: {
