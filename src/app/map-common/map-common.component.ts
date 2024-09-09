@@ -1,45 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import mapboxgl from 'mapbox-gl';
+import { Component, OnInit } from "@angular/core";
+import mapboxgl from "mapbox-gl";
 
 @Component({
-  selector: 'app-map-common',
-  templateUrl: './map-common.component.html',
-  styleUrls: ['./map-common.component.scss'],
-  standalone: true
+  selector: "app-map-common",
+  templateUrl: "./map-common.component.html",
+  styleUrls: ["./map-common.component.scss"],
+  standalone: true,
 })
 export class MapCommonComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    mapboxgl.accessToken = 'pk.eyJ1IjoicGVwaW5vZGV2IiwiYSI6ImNtMGNyeHUyMjA1eGIyanByaHU5aXU4OGEifQ.CfbNZGUoxOobO2MILtDIfA';
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoicGVwaW5vZGV2IiwiYSI6ImNtMGNyeHUyMjA1eGIyanByaHU5aXU4OGEifQ.CfbNZGUoxOobO2MILtDIfA";
 
     const currentHour = new Date().getHours();
-    let lightPreset = 'day';
+    let lightPreset = "day";
 
     if (currentHour >= 6 && currentHour < 8) {
-      lightPreset = 'dawn';
+      lightPreset = "dawn";
     } else if (currentHour >= 9 && currentHour < 18) {
-      lightPreset = 'day';
+      lightPreset = "day";
     } else if (currentHour >= 18 && currentHour < 20) {
-      lightPreset = 'dusk';
+      lightPreset = "dusk";
     } else {
-      lightPreset = 'night';
+      lightPreset = "night";
     }
 
     const map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/standard',
+      container: "map",
+      style: "mapbox://styles/mapbox/standard",
       center: [-70.61489622556584, -33.43296948792158],
       zoom: 16,
-      attributionControl: false
+      attributionControl: false,
     });
 
-    map.on('style.load', () => {
-      map.setConfigProperty('basemap', 'lightPreset', lightPreset);
+    map.on("style.load", () => {
+      map.setConfigProperty("basemap", "lightPreset", lightPreset);
+      map.resize();
     });
 
-    map.on('render', function() {
+    map.on("render", function () {
       map.resize();
     });
   }
