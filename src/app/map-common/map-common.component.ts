@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import mapboxgl from "mapbox-gl";
 
 @Component({
@@ -7,7 +7,12 @@ import mapboxgl from "mapbox-gl";
   styleUrls: ["./map-common.component.scss"],
   standalone: true,
 })
-export class MapCommonComponent implements OnInit {
+export class MapCommonComponent implements OnInit, OnDestroy {
+  private watchId: number | null = null;
+  private map: mapboxgl.Map | null = null;
+  private geolocateControl: mapboxgl.GeolocateControl | null = null;
+  private userLocation: mapboxgl.LngLat | null = null;
+
   constructor() {}
 
   ngOnInit(): void {
@@ -27,7 +32,7 @@ export class MapCommonComponent implements OnInit {
       lightPreset = "night";
     }
 
-    const map = new mapboxgl.Map({
+    this.map = new mapboxgl.Map({
       container: "map",
       style: "mapbox://styles/mapbox/standard",
       center: [-70.61489622556584, -33.43296948792158],
@@ -35,13 +40,66 @@ export class MapCommonComponent implements OnInit {
       attributionControl: false,
     });
 
-    map.on("style.load", () => {
-      map.setConfigProperty("basemap", "lightPreset", lightPreset);
-      map.resize();
+    this.geolocateControl = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: false,
+      showUserHeading: true,
     });
 
-    map.on("render", function () {
-      map.resize();
+    this.map.addControl(this.geolocateControl, "bottom-right");
+
+    this.map.on("style.load", () => {
+      this.map!.setConfigProperty("basemap", "lightPreset", lightPreset);
+      this.map!.resize();
     });
+
+    this.map.on("render", () => {
+      this.map!.resize();
+    });
+
+    this.map.on("pluginStateChange", () => {
+      this.map!.resize();
+    });
+
+    this.map.on("load", () => {
+      this.geolocateControl!.trigger();
+    });
+
+    if (navigator.geolocation) {
+      this.watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          const lngLat = new mapboxgl.LngLat(
+            position.coords.longitude,
+            position.coords.latitude,
+          );
+          this.userLocation = lngLat;
+          console.log("User position:", lngLat);
+        },
+        (error) => {
+          console.error("Error watching position:", error);
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: 27000,
+        },
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+
+    this.geolocateControl.on("geolocate", () => {
+      if (this.userLocation) {
+        this.map!.setCenter(this.userLocation);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.watchId !== null) {
+      navigator.geolocation.clearWatch(this.watchId);
+    }
   }
 }

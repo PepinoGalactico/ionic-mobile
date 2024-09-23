@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { FooterComponent } from "./footer/footer.component";
+import { AuthGuard } from "./auth.guard";
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
         data: {
           preload: true,
         },
+        canActivate: [AuthGuard],
       },
       {
         path: "account",
@@ -35,6 +37,7 @@ const routes: Routes = [
         data: {
           preload: true,
         },
+        canActivate: [AuthGuard],
       },
       {
         path: "settings",
@@ -45,6 +48,7 @@ const routes: Routes = [
         data: {
           preload: true,
         },
+        canActivate: [AuthGuard],
       },
     ],
   },
