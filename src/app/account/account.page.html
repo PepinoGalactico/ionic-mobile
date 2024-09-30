@@ -121,6 +121,7 @@
                         name="names"
                         [(ngModel)]="profile.names"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       />
                     </div>
                     <div class="flex flex-col">
@@ -135,6 +136,7 @@
                         name="last_name"
                         [(ngModel)]="profile.last_name"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       />
                     </div>
                     <div class="flex flex-col">
@@ -149,6 +151,7 @@
                         name="second_last_name"
                         [(ngModel)]="profile.second_last_name"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       />
                     </div>
                   </div>
@@ -274,6 +277,7 @@
                         [(ngModel)]="profile.region"
                         (change)="onRegionChange($event)"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       >
                         <option value="" disabled>Selecciona una región</option>
                         <option
@@ -298,6 +302,7 @@
                         [disabled]="!profile.region"
                         (change)="onComunaChange($event)"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       >
                         <option value="" disabled>Selecciona una comuna</option>
                         <option *ngFor="let comuna of comunas" [value]="comuna">
@@ -317,6 +322,7 @@
                         name="address_line"
                         [(ngModel)]="profile.address"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       />
                     </div>
                     <div class="flex flex-col">
@@ -331,6 +337,7 @@
                         name="address_number"
                         [(ngModel)]="profile.address_number"
                         class="text-black text-md font-body rounded-lg bg-gray-50 p-3"
+                        required
                       />
                     </div>
                     <div class="flex flex-col">
