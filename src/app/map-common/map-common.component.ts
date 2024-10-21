@@ -92,7 +92,15 @@ export class MapCommonComponent implements OnInit, OnDestroy {
 
     this.geolocateControl.on("geolocate", () => {
       if (this.userLocation) {
-        this.map!.setCenter(this.userLocation);
+        this.map?.flyTo({
+          center: [this.userLocation.lng, this.userLocation.lat],
+          zoom: 16,
+          speed: 1.5,
+          curve: 1,
+          easing(t) {
+            return t;
+          },
+        });
       }
     });
   }
