@@ -8,7 +8,7 @@
       <h1 class="text-black dark:text-white text-4xl">Ajustes</h1>
       <div class="bg-white dark:bg-black">
         <button
-          (click)="darkThemeSelectorService.setDarkTheme()"
+          (click)="themeSwitcherService.setDarkTheme()"
           class="bg-white dark:bg-black border-2 border-input border-solid p-2 rounded-l-md"
         >
           <svg
@@ -24,7 +24,7 @@
           </svg>
         </button>
         <button
-          (click)="darkThemeSelectorService.setLightTheme()"
+          (click)="themeSwitcherService.setLightTheme()"
           class="bg-white dark:bg-black border-2 border-input border-solid p-2"
         >
           <svg
@@ -40,7 +40,7 @@
           </svg>
         </button>
         <button
-          (click)="darkThemeSelectorService.setSystemTheme()"
+          (click)="themeSwitcherService.setSystemTheme()"
           class="bg-white dark:bg-black border-2 border-input border-solid p-2 rounded-r-md"
         >
           <svg

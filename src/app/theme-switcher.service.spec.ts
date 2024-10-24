@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ThemeSwitcherService } from './theme-switcher.service';
+import { ThemeSwitcherService } from "./theme-switcher.service";
 
-describe('ThemeSwitcherService', () => {
+describe("ThemeSwitcherService", () => {
   let service: ThemeSwitcherService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('ThemeSwitcherService', () => {
     service = TestBed.inject(ThemeSwitcherService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

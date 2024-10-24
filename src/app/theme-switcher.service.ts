@@ -1,65 +1,89 @@
 import { Injectable, signal } from "@angular/core";
+import { Storage } from "@ionic/storage-angular";
 
 export enum AppTheme {
   LIGHT = "light",
   DARK = "dark",
 }
 
-const CLIENT_RENDER = typeof localStorage !== "undefined";
-
 const LS_THEME = "theme";
 
-let selectedTheme: AppTheme | undefined = undefined;
-
-if (CLIENT_RENDER) {
-  selectedTheme = (localStorage.getItem(LS_THEME) as AppTheme) || undefined;
-}
 @Injectable({
   providedIn: "root",
 })
 export class ThemeSwitcherService {
-  currentTheme = signal<AppTheme | undefined>(selectedTheme);
-  setLightTheme() {
+  private storageReady: Promise<void>;
+
+  currentTheme = signal<AppTheme | undefined>(undefined);
+
+  constructor(private storage: Storage) {
+    this.storageReady = this.initStorage();
+  }
+
+  private async initStorage() {
+    await this.storage.create();
+  }
+
+  public async loadInitialTheme() {
+    await this.storageReady;
+    const storedTheme = (await this.storage.get(LS_THEME)) as AppTheme;
+    if (storedTheme) {
+      this.currentTheme.set(storedTheme);
+      this.applyTheme(storedTheme);
+    } else {
+      this.setSystemTheme();
+    }
+  }
+
+  async setLightTheme() {
     this.currentTheme.set(AppTheme.LIGHT);
-    this.setToLocalStorage(AppTheme.LIGHT);
-    this.removeClassFromHtml("dark");
+    await this.setToLocalStorage(AppTheme.LIGHT);
+    this.applyTheme(AppTheme.LIGHT);
   }
-  setDarkTheme() {
+
+  async setDarkTheme() {
     this.currentTheme.set(AppTheme.DARK);
-    this.setToLocalStorage(AppTheme.DARK);
-    this.addClassToHtml("dark");
+    await this.setToLocalStorage(AppTheme.DARK);
+    this.applyTheme(AppTheme.DARK);
   }
-  setSystemTheme() {
+
+  async setSystemTheme() {
     this.currentTheme.set(undefined);
-    this.removeFromLocalStorage();
+    await this.removeFromLocalStorage();
     if (isSystemDark()) {
+      this.applyTheme(AppTheme.DARK);
+    } else {
+      this.applyTheme(AppTheme.LIGHT);
+    }
+  }
+
+  private applyTheme(theme: AppTheme) {
+    if (theme === AppTheme.DARK) {
       this.addClassToHtml("dark");
     } else {
       this.removeClassFromHtml("dark");
     }
   }
+
   private addClassToHtml(className: string) {
-    if (CLIENT_RENDER) {
-      this.removeClassFromHtml(className);
-      document.documentElement.classList.add(className);
-    }
+    document.documentElement.classList.add(className);
   }
+
   private removeClassFromHtml(className: string) {
-    if (CLIENT_RENDER) {
-      document.documentElement.classList.remove(className);
-    }
+    document.documentElement.classList.remove(className);
   }
-  private setToLocalStorage(theme: AppTheme) {
-    if (CLIENT_RENDER) {
-      localStorage.setItem(LS_THEME, theme);
-    }
+
+  private async setToLocalStorage(theme: AppTheme) {
+    await this.storageReady;
+    await this.storage.set(LS_THEME, theme);
   }
-  private removeFromLocalStorage() {
-    if (CLIENT_RENDER) {
-      localStorage.removeItem(LS_THEME);
-    }
+
+  private async removeFromLocalStorage() {
+    await this.storageReady;
+    await this.storage.remove(LS_THEME);
   }
 }
+
 function isSystemDark() {
   if (typeof window !== "undefined") {
     return window.matchMedia("(prefers-color-scheme: dark)").matches;

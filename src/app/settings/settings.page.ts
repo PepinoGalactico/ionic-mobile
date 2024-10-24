@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Profile, SupabaseService } from "../supabase.service";
 import { Router } from "@angular/router";
 import { ThemeSwitcherService } from "../theme-switcher.service";
@@ -8,14 +8,12 @@ import { ThemeSwitcherService } from "../theme-switcher.service";
   templateUrl: "./settings.page.html",
   styleUrls: ["./settings.page.scss"],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage {
   constructor(
     private readonly supabase: SupabaseService,
     private router: Router,
-    protected darkThemeSelectorService: ThemeSwitcherService,
+    public themeSwitcherService: ThemeSwitcherService,
   ) {}
-
-  ngOnInit() {}
 
   async signOut() {
     try {

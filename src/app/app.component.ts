@@ -1,9 +1,9 @@
-import { Component, NgZone } from "@angular/core";
+import { Component, NgZone, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { OnInit } from "@angular/core";
 import { initFlowbite } from "flowbite";
 import { SupabaseService } from "./supabase.service";
 import { App, URLOpenListenerEvent } from "@capacitor/app";
+import { ThemeSwitcherService } from "./theme-switcher.service";
 
 @Component({
   selector: "app-root",
@@ -14,15 +14,11 @@ export class AppComponent implements OnInit {
   title = "web-app";
   hasSession: boolean = false;
 
-  async ngOnInit() {
-    initFlowbite();
-    this.hasSession = await this.supabase.hasSession();
-  }
-
   constructor(
     private supabase: SupabaseService,
     private zone: NgZone,
     private router: Router,
+    private themeSwitcherService: ThemeSwitcherService,
   ) {
     this.supabase.authChanges((_, session) => {
       if (session?.user) {
@@ -32,6 +28,12 @@ export class AppComponent implements OnInit {
       }
     });
     this.setupListener();
+  }
+
+  async ngOnInit() {
+    initFlowbite();
+    this.hasSession = await this.supabase.hasSession();
+    await this.themeSwitcherService.loadInitialTheme(); // Ensure theme is loaded
   }
 
   setupListener() {
