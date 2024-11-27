@@ -1,3 +1,11 @@
 <ion-content>
-  <app-map-common></app-map-common>
+  <app-map-common
+    *ngIf="currentUserType === 'passenger'"
+    [userType]="'passenger'"
+  ></app-map-common>
+
+  <app-map-common
+    *ngIf="currentUserType === 'driver'"
+    [userType]="'driver'"
+  ></app-map-common>
 </ion-content>

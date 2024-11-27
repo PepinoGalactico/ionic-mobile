@@ -1,0 +1,7 @@
+.ion-content-bg {
+  --background: white;
+
+  &.dark {
+    --background: black;
+  }
+}

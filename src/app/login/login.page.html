@@ -12,29 +12,32 @@
       <h2 class="text-black dark:text-white text-2xl font-body">
         Inicia sesión
       </h2>
-      <div class="w-full">
-        <input
-          [(ngModel)]="email"
-          name="email"
-          autocomplete
-          type="email"
-          class="shadow-lg border-0 rounded-lg py-3 w-full font-body text-black transition hover:scale-105"
-          placeholder="Correo electrónico"
-        />
-        <p
-          *ngIf="errorMessage"
-          class="mt-2 mx-auto text-center text-sm text-red-600 dark:text-red-500"
+      <div class="w-full space-y-6">
+        <div class="w-full h-[65px]">
+          <input
+            [(ngModel)]="email"
+            name="email"
+            autocomplete
+            type="email"
+            class="flex w-full text-black dark:text-white p-3 rounded-md bg-background border border-solid border-input hover:bg-accent hover:text-accent-foreground text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            placeholder="Correo electrónico"
+          />
+          <p
+            *ngIf="errorMessage"
+            class="mt-2 text-sm text-red-600 dark:text-red-500"
+          >
+            <span class="font-medium">¡Error!</span> Debes ingresar un correo
+            válido.
+          </p>
+        </div>
+
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-4 py-2 w-full"
         >
-          <span class="font-medium">¡Error!</span> Debes ingresar un correo
-          válido.
-        </p>
+          Continuar
+        </button>
       </div>
-      <button
-        type="submit"
-        class="shadow-lg border-0 font-body bg-black dark:bg-white hover:bg-gray-200 active:bg-gray-300 rounded-md px-8 py-4 text-white dark:text-black font-semibold text-md transition hover:scale-105 active:scale-95 w-full"
-      >
-        Continuar
-      </button>
     </form>
     <form
       (ngSubmit)="handleOAuth($event)"
@@ -46,14 +49,14 @@
             class="w-64 h-px my-8 bg-neutral-800 dark:bg-neutral-300 border-0"
           />
           <span
-            class="absolute px-3 font-medium text-gray-300 -translate-x-1/2 left-1/2 bg-white dark:bg-black"
+            class="absolute px-3 font-medium text-neutral-800 dark:text-gray-300 -translate-x-1/2 left-1/2 bg-white dark:bg-black"
             >O</span
           >
         </div>
       </div>
       <button
         type="submit"
-        class="shadow-lg border-0 font-body bg-black dark:bg-white hover:bg-gray-200 active:bg-gray-300 rounded-md px-8 py-4 text-white dark:text-black font-semibold text-md transition hover:scale-105 active:scale-95 w-full"
+        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-12 px-4 py-2 w-full"
       >
         Continuar con Google
       </button>

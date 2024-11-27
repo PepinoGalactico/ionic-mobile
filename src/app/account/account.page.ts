@@ -16,14 +16,9 @@ export class AccountPage implements OnInit {
   @ViewChild("modal1") modal1!: IonModal;
   @ViewChild("modal2") modal2!: IonModal;
 
-  ngAfterViewInit() {
-    initFlowbite();
-  }
-
   profile: Profile = {
-    username: "",
     avatar_url: "",
-    names: "",
+    name: "",
     last_name: "",
     second_last_name: "",
     address: "",
@@ -32,6 +27,7 @@ export class AccountPage implements OnInit {
     region: "",
     apartment: "",
     full_name: "",
+    is_registered: false,
   };
 
   currentAvatarUrl: string | undefined;
@@ -83,12 +79,12 @@ export class AccountPage implements OnInit {
       this.loading = false;
     }
     if (
-      this.profile.names &&
+      this.profile.name &&
       this.profile.last_name &&
       this.profile.second_last_name
     ) {
       this.fullname =
-        this.profile.names +
+        this.profile.name +
         " " +
         this.profile.last_name +
         " " +
